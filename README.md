@@ -102,8 +102,20 @@ graph TD
   - `evaluator_agents.py`: 기술/문화 평가 에이전트
 
 ### 3. RAG (Retrieval Augmented Generation)
-- `search_service.py`: FAISS 기반 유사도 검색 구현
-- `data/faiss/`: 벡터 데이터베이스 저장소
+- `search_service.py`: 
+  - 역할별 관점(perspective_map) 기반의 검색 로직 구현
+  - LLM을 활용한 검색 쿼리 개선 (improve_search_query)
+  - 각 에이전트(Resume Writer, Evaluator 등)의 컨텍스트 검색 지원
+  - 검색 결과 포맷팅 및 메타데이터 처리
+- `vector_stores.py`:
+  - FAISS 벡터 스토어 초기화 및 관리
+  - 임베딩 모델 설정 (text-embedding-3-small)
+  - 문서 임베딩 및 유사도 검색 기능
+  - 메모리 기반 벡터 스토어 구현
+- `search_info()`: 
+  - 자기소개서 내용 기반 관련 정보 검색
+  - k개의 가장 관련성 높은 결과 반환
+  - 역할별 특화된 검색 결과 제공
 
 ### 4. Utils
 - `config.py`: 환경 설정 및 상수 정의
@@ -136,6 +148,6 @@ graph LR
 ```bash
 # .env 파일
 OPENAI_API_KEY=your_api_key
-OPENAI_MODEL_NAME=gpt-3.5-turbo
+OPENAI_MODEL_NAME=gpt-4-turbo
 OPENAI_EMBEDDING_MODEL=text-embedding-3-small
 ```
